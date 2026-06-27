@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔬 Grade 11 Advanced Physics - Convex & Concave Lenses (1.2)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        body.en-mode { font-family: 'Inter', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; font-style: italic; direction: ltr; display: inline-block; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed; top: 16px; left: 16px; z-index: 100;
+            background: white; padding: 6px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+            border: 2px solid #0d9488;
+        }
+        [dir="ltr"] .lang-switch { left: auto; right: 16px; }
+        .lang-btn {
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; border: none; font-size: 0.875rem;
+            background: transparent; color: #6b7280;
+        }
+        .lang-btn.active { background: #0d9488; color: white; box-shadow: 0 2px 6px rgba(13,148,136,0.4); }
+        .lang-btn:hover:not(.active) { background: #f0fdfa; color: #0d9488; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <div class="lang-switch no-print">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+    </div>
+
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2" data-ar="⏱️ الوقت المتبقي:" data-en="⏱️ Time Remaining:">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">45:00</span>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="👁️ إظهار / إخفاء الإجابات" data-en="👁️ Show / Hide Answers">👁️ إظهار / إخفاء الإجابات</button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة / PDF" data-en="🖨️ Print / PDF">🖨️ طباعة / PDF</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="🔬 فيزياء الصف الحادي عشر متقدم" data-en="🔬 Grade 11 Advanced Physics">🔬 فيزياء الصف الحادي عشر متقدم</h1>
+            <h2 class="text-lg text-teal-600 font-semibold" data-ar="الدرس 1.2: العدسات المحدبة والمقعرة" data-en="Lesson 1.2: Convex & Concave Lenses">الدرس 1.2: العدسات المحدبة والمقعرة</h2>
+            <p class="text-sm text-gray-600 mt-2" data-ar="العدسات، معادلة العدسة الرقيقة، التكبير، وتطبيقات العدسات" data-en="Lenses, Thin Lens Equation, Magnification & Lens Applications">العدسات، معادلة العدسة الرقيقة، التكبير، وتطبيقات العدسات</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span><span data-ar="👤 الاسم:" data-en="👤 Name:">👤 الاسم:</span> <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="Enter name"></span>
+            <span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="Class"></span>
+            <span><span data-ar="⏱️ المدة: 45 دقيقة" data-en="⏱️ Duration: 45 min">⏱️ المدة: 45 دقيقة</span></span>
+            <span><span data-ar="📊 المجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span></span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8" id="exam-content"></main>
+
+    <div class="text-center no-print pb-8 mt-8">
+        <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📝 تسليم وتصحيح الامتحان" data-en="📝 Submit & Grade Exam">📝 تسليم وتصحيح الامتحان</button>
+    </div>
+
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="📊 نتائج الامتحان" data-en="📊 Exam Results">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p data-ar="اسم الطالب" data-en="Student Name">اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="التاريخ" data-en="Date">التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p data-ar="المجموع" data-en="Score">المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">-</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📈 تفصيل الأداء حسب القسم:" data-en="📈 Performance Breakdown:">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="العدسات المحدبة" data-en="Convex Lenses">العدسات المحدبة</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="العدسات المقعرة" data-en="Concave Lenses">العدسات المقعرة</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="معادلة العدسة الرقيقة" data-en="Thin Lens Equation">معادلة العدسة الرقيقة</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="التكبير والصور" data-en="Magnification & Images">التكبير والصور</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700" data-ar="تطبيقات عملية" data-en="Practical Applications">تطبيقات عملية</span>
+                    <span id="sec5-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar="📧 إرسال النتائج للمعلم" data-en="📧 Send Results to Teacher">📧 إرسال النتائج للمعلم</button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold" data-ar="🖨️ طباعة النتائج" data-en="🖨️ Print Results">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © <span data-ar="فيزياء الصف الحادي عشر متقدم | الدرس 1.2: العدسات المحدبة والمقعرة" data-en="Grade 11 Advanced Physics | Lesson 1.2: Convex & Concave Lenses">فيزياء الصف الحادي عشر متقدم | الدرس 1.2: العدسات المحدبة والمقعرة</span> | Mr. Mohammed Hesham
+    </footer>
+
+<script>
+const examData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 الجزء الأول: العدسات المحدبة', en: '🔹 Part 1: Convex Lenses' },
+            questions: [
+                {
+                    q: { ar: 'العدسة المحدبة (Convex Lens) تتميز بأنها:', en: 'A convex lens is characterized by being:' },
+                    options: [
+                        { ar: 'أقل سماكة في الوسط', en: 'Thinner in the middle' },
+                        { ar: 'أكثر سماكة في الوسط وأقل عند الأطراف', en: 'Thicker in the middle and thinner at the edges' },
+                        { ar: 'متساوية السماكة في كل مكان', en: 'Equal thickness everywhere' },
+                        { ar: 'مسطحة تماماً', en: 'Completely flat' }
+                    ],
+                    correct: 1,
+                    answer: { ar: 'العدسة المحدبة تكون أكثر سماكة في المنتصف وتجمع الأشعة الضوئية', en: 'A convex lens is thicker in the middle and converges light rays' }
+                },
+                {
+                    q: { ar: 'عندما يوضع جسم على مسافة أكبر من 2f من عدسة محدبة، فإن الصورة المتكونة تكون:', en: 'When an object is placed at a distance greater than 2f from a convex lens, the image formed is:' },
+                    options: [
+                        { ar: 'وهمية، معتدلة، مكبرة', en: 'Virtual, upright, magnified' },
+                        { ar: 'حقيقية، مقلوبة، مصغرة', en: 'Real, inverted, diminished' },
+                        { ar: 'حقيقية، مقلوبة، بنفس الحجم', en: 'Real, inverted, same size' },
+                        { ar: 'وهمية، مقلوبة، مصغرة', en: 'Virtual, inverted, diminished' }
+                    ],
+                    correct: 1,
+                    answer: { ar: 'عندما Xo > 2f: الصورة حقيقية، مقلوبة، مصغرة، وتقع بين F و 2F', en: 'When Xo > 2f: image is real, inverted, diminished, located between F and 2F' }
+                },
+                {
+                    q: { ar: 'البعد البؤري للعدسة المحدبة يكون:', en: 'The focal length of a convex lens is:' },
+                    options: [
+                        { ar: 'سالب (-)', en: 'Negative (-)' },
+                        { ar: 'صفر', en: 'Zero' },
+                        { ar: 'موجب (+)', en: 'Positive (+)' },
+                        { ar: 'يعتمد على لون الضوء فقط', en: 'Depends only on light color' }
+                    ],
+                    correct: 2,
+                    answer: { ar: 'البعد البؤري للعدسة المحدبة (المجمعة) يكون موجباً (+f)', en: 'The focal length of a convex (converging) lens is positive (+f)' }
+                },
+                {
+                    q: { ar: 'من التطبيقات العملية للعدسة المحدبة:', en: 'A practical application of a convex lens is:' },
+                    options: [
+                        { ar: 'العدسة المكبرة (Magnifying Glass)', en: 'Magnifying Glass' },
+                        { ar: 'نظارات قصر النظر', en: 'Nearsightedness glasses' },
+                        { ar: 'المرايا المستوية', en: 'Plane mirrors' },
+                        { ar: 'المنشور الزجاجي', en: 'Glass prism' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'العدسة المحدبة تستخدم في العدسات المكبرة، نظارات طول النظر، والكاميرات', en: 'Convex lenses are used in magnifying glasses, farsightedness glasses, and cameras' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 الجزء الثاني: العدسات المقعرة', en: '🔹 Part 2: Concave Lenses' },
+            questions: [
+                {
+                    q: { ar: 'العدسة المقعرة (Concave Lens) تتميز بأنها:', en: 'A concave lens is characterized by being:' },
+                    options: [
+                        { ar: 'أكثر سماكة في الوسط', en: 'Thicker in the middle' },
+                        { ar: 'أقل سماكة في الوسط وأكثر سماكة عند الأطراف', en: 'Thinner in the middle and thicker at the edges' },
+                        { ar: 'متساوية السماكة', en: 'Equal thickness' },
+                        { ar: 'كروية الشكل بالكامل', en: 'Completely spherical' }
+                    ],
+                    correct: 1,
+                    answer: { ar: 'العدسة المقعرة أقل سماكة في الوسط وتفرق الأشعة الضوئية', en: 'A concave lens is thinner in the middle and diverges light rays' }
+                },
+                {
+                    q: { ar: 'الصورة المتكونة بواسطة العدسة المقعرة لأي جسم تكون دائماً:', en: 'The image formed by a concave lens for any object is always:' },
+                    options: [
+                        { ar: 'وهمية، معتدلة، مصغرة', en: 'Virtual, upright, diminished' },
+                        { ar: 'حقيقية، مقلوبة، مكبرة', en: 'Real, inverted, magnified' },
+                        { ar: 'حقيقية، معتدلة، بنفس الحجم', en: 'Real, upright, same size' },
+                        { ar: 'وهمية، مقلوبة، مكبرة', en: 'Virtual, inverted, magnified' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'العدسة المقعرة تكون دائماً صورة وهمية، معتدلة، ومصغرة بغض النظر عن موقع الجسم', en: 'A concave lens always forms a virtual, upright, and diminished image regardless of object position' }
+                },
+                {
+                    q: { ar: 'البعد البؤري للعدسة المقعرة يكون:', en: 'The focal length of a concave lens is:' },
+                    options: [
+                        { ar: 'موجب (+)', en: 'Positive (+)' },
+                        { ar: 'صفر', en: 'Zero' },
+                        { ar: 'سالب (-)', en: 'Negative (-)' },
+                        { ar: 'لا نهائي', en: 'Infinite' }
+                    ],
+                    correct: 2,
+                    answer: { ar: 'البعد البؤري للعدسة المقعرة (المفرقة) يكون سالباً (-f)', en: 'The focal length of a concave (diverging) lens is negative (-f)' }
+                },
+                {
+                    q: { ar: 'تستخدم العدسة المقعرة في:', en: 'A concave lens is used in:' },
+                    options: [
+                        { ar: 'المجاهر المركبة', en: 'Compound microscopes' },
+                        { ar: 'تصحيح قصر النظر (Nearsightedness)', en: 'Correcting nearsightedness' },
+                        { ar: 'التلسكوبات الفلكية فقط', en: 'Astronomical telescopes only' },
+                        { ar: 'العدسات المكبرة', en: 'Magnifying glasses' }
+                    ],
+                    correct: 1,
+                    answer: { ar: 'العدسة المقعرة تستخدم لتصحيح قصر النظر لأن الصورة تتكون أمام الشبكية', en: 'Concave lenses are used to correct nearsightedness because the image forms in front of the retina' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 الجزء الثالث: معادلة العدسة الرقيقة', en: '🔹 Part 3: Thin Lens Equation' },
+            questions: [
+                {
+                    q: { ar: 'معادلة العدسة الرقيقة الصحيحة هي:', en: 'The correct thin lens equation is:' },
+                    options: [
+                        { ar: 'f = Xo + Xi', en: 'f = Xo + Xi' },
+                        { ar: '1/f = 1/Xo - 1/Xi', en: '1/f = 1/Xo - 1/Xi' },
+                        { ar: '1/f = 1/Xo + 1/Xi', en: '1/f = 1/Xo + 1/Xi' },
+                        { ar: 'f = Xo × Xi', en: 'f = Xo × Xi' }
+                    ],
+                    correct: 2,
+                    answer: { ar: 'معادلة العدسة الرقيقة: 1/f = 1/Xo + 1/Xi حيث f البعد البؤري، Xo مسافة الجسم، Xi مسافة الصورة', en: 'Thin lens equation: 1/f = 1/Xo + 1/Xi where f is focal length, Xo is object distance, Xi is image distance' }
+                },
+                {
+                    q: { ar: 'إذا كان البعد البؤري f = 10 cm ومسافة الجسم Xo = 30 cm، فإن مسافة الصورة Xi تساوي:', en: 'If focal length f = 10 cm and object distance Xo = 30 cm, then image distance Xi equals:' },
+                    options: [
+                        { ar: '20 cm', en: '20 cm' },
+                        { ar: '15 cm', en: '15 cm' },
+                        { ar: '30 cm', en: '30 cm' },
+                        { ar: '40 cm', en: '40 cm' }
+                    ],
+                    correct: 1,
+                    answer: { ar: '1/10 = 1/30 + 1/Xi → 1/Xi = 1/10 - 1/30 = 3/30 - 1/30 = 2/30 = 1/15 → Xi = 15 cm', en: '1/10 = 1/30 + 1/Xi → 1/Xi = 1/10 - 1/30 = 3/30 - 1/30 = 2/30 = 1/15 → Xi = 15 cm' }
+                },
+                {
+                    q: { ar: 'عندما يوضع الجسم عند البؤرة (Xo = f) لعدسة محدبة، فإن الصورة تتكون:', en: 'When an object is placed at the focal point (Xo = f) of a convex lens, the image forms:' },
+                    options: [
+                        { ar: 'عند اللانهاية (لا تتكون صورة واضحة)', en: 'At infinity (no clear image forms)' },
+                        { ar: 'عند البؤرة الأخرى', en: 'At the other focal point' },
+                        { ar: 'عند 2f', en: 'At 2f' },
+                        { ar: 'بين f و 2f', en: 'Between f and 2f' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما Xo = f، تصبح 1/Xi = 0 أي Xi = ∞، والأشعة تخرج متوازية', en: 'When Xo = f, 1/Xi = 0 so Xi = ∞, and rays emerge parallel' }
+                },
+                {
+                    q: { ar: 'عدسة محدبة بعدها البؤري f = 8 cm، وُضع جسم على مسافة Xo = 32 cm. مسافة الصورة Xi تساوي:', en: 'A convex lens with focal length f = 8 cm, an object is placed at Xo = 32 cm. The image distance Xi equals:' },
+                    options: [
+                        { ar: '8 cm', en: '8 cm' },
+                        { ar: '16 cm', en: '16 cm' },
+                        { ar: '10.67 cm', en: '10.67 cm' },
+                        { ar: '32 cm', en: '32 cm' }
+                    ],
+                    correct: 2,
+                    answer: { ar: '1/8 = 1/32 + 1/Xi → 1/Xi = 4/32 - 1/32 = 3/32 → Xi = 32/3 ≈ 10.67 cm', en: '1/8 = 1/32 + 1/Xi → 1/Xi = 4/32 - 1/32 = 3/32 → Xi = 32/3 ≈ 10.67 cm' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 الجزء الرابع: التكبير والصور', en: '🔹 Part 4: Magnification & Images' },
+            questions: [
+                {
+                    q: { ar: 'معادلة التكبير (Magnification) الصحيحة هي:', en: 'The correct magnification equation is:' },
+                    options: [
+                        { ar: 'M = Xo/Xi', en: 'M = Xo/Xi' },
+                        { ar: 'M = hi/ho = -Xi/Xo', en: 'M = hi/ho = -Xi/Xo' },
+                        { ar: 'M = ho/hi', en: 'M = ho/hi' },
+                        { ar: 'M = f/Xo', en: 'M = f/Xo' }
+                    ],
+                    correct: 1,
+                    answer: { ar: 'التكبير M = hi/ho = -Xi/Xo حيث hi ارتفاع الصورة و ho ارتفاع الجسم', en: 'Magnification M = hi/ho = -Xi/Xo where hi is image height and ho is object height' }
+                },
+                {
+                    q: { ar: 'إذا كان التكبير M = -2، فإن الصورة تكون:', en: 'If magnification M = -2, the image is:' },
+                    options: [
+                        { ar: 'مقلوبة ومكبرة إلى الضعف', en: 'Inverted and magnified 2 times' },
+                        { ar: 'معتدلة ومكبرة إلى الضعف', en: 'Upright and magnified 2 times' },
+                        { ar: 'مقلوبة ومصغرة إلى النصف', en: 'Inverted and diminished to half' },
+                        { ar: 'معتدلة ومصغرة إلى النصف', en: 'Upright and diminished to half' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الإشارة السالبة تعني أن الصورة مقلوبة، والقيمة 2 تعني أنها مكبرة مرتين', en: 'Negative sign means image is inverted, and value 2 means it is magnified 2 times' }
+                },
+                {
+                    q: { ar: 'الصورة الوهمية (Virtual Image) تتكون عندما:', en: 'A virtual image forms when:' },
+                    options: [
+                        { ar: 'Xi يكون موجباً', en: 'Xi is positive' },
+                        { ar: 'Xo = f', en: 'Xo = f' },
+                        { ar: 'Xi يكون سالباً', en: 'Xi is negative' },
+                        { ar: 'Xo > 2f دائماً', en: 'Xo > 2f always' }
+                    ],
+                    correct: 2,
+                    answer: { ar: 'الصورة الوهمية تكون عندما Xi سالب، ولا يمكن استقبالها على حاجز', en: 'A virtual image forms when Xi is negative, and cannot be projected on a screen' }
+                },
+                {
+                    q: { ar: 'جسم ارتفاعه ho = 4 cm وُضع على مسافة Xo = 20 cm من عدسة محدبة بعدها البؤري f = 10 cm. ارتفاع الصورة hi يساوي:', en: 'An object of height ho = 4 cm is placed at Xo = 20 cm from a convex lens with f = 10 cm. The image height hi equals:' },
+                    options: [
+                        { ar: '2 cm', en: '2 cm' },
+                        { ar: '-4 cm', en: '-4 cm' },
+                        { ar: '8 cm', en: '8 cm' },
+                        { ar: '-2 cm', en: '-2 cm' }
+                    ],
+                    correct: 1,
+                    answer: { ar: '1/10 = 1/20 + 1/Xi → Xi = 20 cm. ثم M = -Xi/Xo = -20/20 = -1. إذن hi = M × ho = -1 × 4 = -4 cm (حقيقية، مقلوبة، بنفس الحجم)', en: '1/10 = 1/20 + 1/Xi → Xi = 20 cm. Then M = -Xi/Xo = -20/20 = -1. So hi = M × ho = -1 × 4 = -4 cm (real, inverted, same size)' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 الجزء الخامس: تطبيقات عملية', en: '🔹 Part 5: Practical Applications' },
+            questions: [
+                {
+                    q: { ar: 'لتصحيح طول النظر (Hyperopia/Farsightedness) نستخدم:', en: 'To correct farsightedness (Hyperopia), we use:' },
+                    options: [
+                        { ar: 'عدسة محدبة (Convex Lens)', en: 'Convex Lens' },
+                        { ar: 'عدسة مقعرة (Concave Lens)', en: 'Concave Lens' },
+                        { ar: 'مرآة مستوية', en: 'Plane mirror' },
+                        { ar: 'منشور زجاجي', en: 'Glass prism' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'في طول النظر تتكون الصورة خلف الشبكية، فنستخدم عدسة محدبة لتقريبها', en: 'In farsightedness, image forms behind retina, so we use a convex lens to bring it forward' }
+                },
+                {
+                    q: { ar: 'العدسة الطبيعية في العين البشرية هي:', en: 'The natural lens in the human eye is:' },
+                    options: [
+                        { ar: 'مقعرة', en: 'Concave' },
+                        { ar: 'محدبة', en: 'Convex' },
+                        { ar: 'مسطحة', en: 'Flat' },
+                        { ar: 'أسطوانية', en: 'Cylindrical' }
+                    ],
+                    correct: 1,
+                    answer: { ar: 'العين تحتوي على عدسة محدبة طبيعية تكسر الضوء لتكوين صورة على الشبكية', en: 'The eye contains a natural convex lens that refracts light to form an image on the retina' }
+                },
+                {
+                    q: { ar: 'المجهر المركب (Compound Microscope) يتكون من:', en: 'A compound microscope consists of:' },
+                    options: [
+                        { ar: 'عدسة واحدة محدبة', en: 'One convex lens' },
+                        { ar: 'عدسة واحدة مقعرة', en: 'One concave lens' },
+                        { ar: 'عدستين محدبتين (شيئية وعينية)', en: 'Two convex lenses (objective and eyepiece)' },
+                        { ar: 'مرآة مقعرة فقط', en: 'Only a concave mirror' }
+                    ],
+                    correct: 2,
+                    answer: { ar: 'المجهر المركب يتكون من عدستين محدبتين: الشيئية (قرب الجسم) والعينية (قرب العين)', en: 'A compound microscope has two convex lenses: objective (near object) and eyepiece (near eye)' }
+                },
+                {
+                    q: { ar: 'في كاميرا التصوير الفوتوغرافي، العدسة المستخدمة تكون:', en: 'In a photographic camera, the lens used is:' },
+                    options: [
+                        { ar: 'محدبة لتكوين صورة حقيقية مقلوبة على الفيلم', en: 'Convex to form a real inverted image on the film' },
+                        { ar: 'مقعرة لتكوين صورة وهمية', en: 'Concave to form a virtual image' },
+                        { ar: 'مسطحة تماماً', en: 'Completely flat' },
+                        { ar: 'لا تحتوي الكاميرا على عدسات', en: 'Camera has no lenses' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'كاميرا التصوير تستخدم عدسة محدبة لتكوين صورة حقيقية مقلوبة ومصغرة على المستشعر أو الفيلم', en: 'A camera uses a convex lens to form a real, inverted, diminished image on the sensor or film' }
+                }
+            ]
+        }
+    ]
+};
+
+let currentLang = 'ar';
+let timeRemaining = 2700;
+let timerInterval;
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+    
+    renderExam();
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = {
+        ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة:' },
+        en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' }
+    };
+    const lbl = labels[currentLang];
+    const isRTL = currentLang === 'ar';
+    
+    let html = '';
+    examData.sections.forEach((section, sIdx) => {
+        html += `
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">${section.title[currentLang]}</h2>
+            <ol id="section-${sIdx}-list" class="space-y-4 text-sm">`;
+            
+        section.questions.forEach((q, qIdx) => {
+            const globalIdx = sIdx * 4 + qIdx;
+            const borderSide = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `
+                <li class="${borderSide} border-teal-500 py-2" id="q-${globalIdx}">
+                    <strong>${globalIdx + 1}.</strong> ${q.q[currentLang]}<br>`;
+                    
+            q.options.forEach((opt, oIdx) => {
+                const radioSide = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `
+                    <label class="cursor-pointer block mt-1 ${isRTL ? 'mr-4' : 'ml-4'}">
+                        <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${radioSide}"> 
+                        ${lbl.option[oIdx]}) ${opt[currentLang]}
+                    </label>`;
+            });
+            
+            html += `
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">
+                        ${lbl.answer} ${lbl.option[q.correct]}) ${q.options[q.correct][currentLang]} — ${q.answer[currentLang]}
+                    </div>
+                </li>`;
+        });
+        
+        html += `
+            </ol>
+        </section>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    document.getElementById('timer-container').style.display = 'block';
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "انتهى الوقت! سيتم تسليم الامتحان تلقائياً." : "Time's up! Exam will be submitted automatically.");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function toggleAnswers() {
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const correctAnswersLetters = [
+        'b','b','c','a',  // Q1-4: Convex Lenses
+        'b','a','c','b',  // Q5-8: Concave Lenses
+        'c','b','a','c',  // Q9-12: Thin Lens Equation
+        'b','a','c','b',  // Q13-16: Magnification & Images
+        'a','b','c','a'   // Q17-20: Applications
+    ];
+    
+    let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0, sec5 = 0;
+    
+    for (let i = 0; i < 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        
+        if (li) {
+            const isCorrect = selected && selected.value === correctAnswersLetters[i];
+            
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+                if (i < 4) sec1++;
+                else if (i < 8) sec2++;
+                else if (i < 12) sec3++;
+                else if (i < 16) sec4++;
+                else sec5++;
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+        }
+    }
+
+    const score = (correctCount / 20) * 100;
+    const successRate = Math.round(score);
+    
+    document.getElementById('res-total').textContent = `${Math.round(score)} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'طالب' : 'Student');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    document.getElementById('sec1-score').textContent = `${sec1}/4`;
+    document.getElementById('sec2-score').textContent = `${sec2}/4`;
+    document.getElementById('sec3-score').textContent = `${sec3}/4`;
+    document.getElementById('sec4-score').textContent = `${sec4}/4`;
+    document.getElementById('sec5-score').textContent = `${sec5}/4`;
+    
+    const badge = document.getElementById('success-badge');
+    const percent = document.getElementById('success-percent');
+    percent.textContent = `${successRate}%`;
+    
+    if (currentLang === 'ar') {
+        if (successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (successRate >= 90) { badge.textContent = 'Excellent'; badge.className = 'success-badge grade-excellent'; }
+        else if (successRate >= 75) { badge.textContent = 'Very Good'; badge.className = 'success-badge grade-good'; }
+        else if (successRate >= 50) { badge.textContent = 'Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = 'Needs Improvement'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sendEmailBtn').classList.remove('hidden');
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '⏳ Sending...';
+
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || (currentLang === 'ar' ? 'غير محدد' : 'N/A');
+    const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const sec1 = document.getElementById('sec1-score').textContent;
+    const sec2 = document.getElementById('sec2-score').textContent;
+    const sec3 = document.getElementById('sec3-score').textContent;
+    const sec4 = document.getElementById('sec4-score').textContent;
+    const sec5 = document.getElementById('sec5-score').textContent;
+
+    const dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    const font = currentLang === 'ar' ? 'Cairo' : 'Inter';
+    
+    const sectionNames = {
+        ar: ['العدسات المحدبة', 'العدسات المقعرة', 'معادلة العدسة الرقيقة', 'التكبير والصور', 'تطبيقات عملية'],
+        en: ['Convex Lenses', 'Concave Lenses', 'Thin Lens Equation', 'Magnification & Images', 'Practical Applications']
+    };
+    const sn = sectionNames[currentLang];
+
+    let answersHTML = `<div dir="${dir}" style="font-family: '${font}', sans-serif;">
+        <h3 style="color:#0d9488;">📊 ${currentLang === 'ar' ? 'تفصيل الأداء - العدسات المحدبة والمقعرة (1.2)' : 'Performance Details - Convex & Concave Lenses (1.2)'}:</h3>
+        <p><strong>${currentLang === 'ar' ? 'الطالب' : 'Student'}:</strong> ${name} | <strong>${currentLang === 'ar' ? 'الشعبة' : 'Class'}:</strong> ${studentClass}</p>
+        <ul>
+            <li>${sn[0]}: ${sec1}</li>
+            <li>${sn[1]}: ${sec2}</li>
+            <li>${sn[2]}: ${sec3}</li>
+            <li>${sn[3]}: ${sec4}</li>
+            <li>${sn[4]}: ${sec5}</li>
+        </ul>
+        <table style="border:1px solid #e5e7eb; border-collapse:collapse; width:100%; font-size:14px; direction: ${dir};">
+        <tr style="background:#0d9488; color:white;"><th style="border:1px solid #e5e7eb; padding:8px;">${currentLang === 'ar' ? 'السؤال' : 'Q#'}</th><th style="border:1px solid #e5e7eb; padding:8px;">${currentLang === 'ar' ? 'الإجابة المختارة' : 'Selected'}</th><th style="border:1px solid #e5e7eb; padding:8px;">${currentLang === 'ar' ? 'الحالة' : 'Status'}</th></tr>`;
+    
+    const correctAnswersLetters = ['b','b','c','a','b','a','c','b','c','b','a','c','b','a','c','b','a','b','c','a'];
+    
+    for (let i = 0; i < 20; i++) {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        const isCorrect = sel && sel.value === correctAnswersLetters[i];
+        answersHTML += `<tr><td style="border:1px solid #e5e7eb; padding:6px;">${i + 1}</td><td style="border:1px solid #e5e7eb; padding:6px;">${sel ? sel.value.toUpperCase() : '-'}</td><td style="border:1px solid #e5e7eb; padding:6px; color:${isCorrect ? 'green' : 'red'}">${isCorrect ? '✅ ' + (currentLang === 'ar' ? 'صحيح' : 'Correct') : '❌ ' + (currentLang === 'ar' ? 'خطأ' : 'Wrong')}</td></tr>`;
+    }
+    answersHTML += '</table></div>';
+
+    const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+    const SERVICE_ID = "service_w15m64i";
+    const TEMPLATE_ID = "template_5b0u2tq";
+    const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+
+    emailjs.init(PUBLIC_KEY);
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        answers_table: answersHTML
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' ? '✅ تم الإرسال بنجاح! تحقق من Gmail.' : '✅ Sent successfully! Check Gmail.';
+            status.style.color = '#059669';
+            btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال' : '✓ Sent';
+        })
+        .catch(err => {
+            status.textContent = currentLang === 'ar' ? '❌ فشل الإرسال. تحقق من الإعدادات.' : '❌ Failed to send. Check settings.';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 إعادة المحاولة' : '📧 Retry';
+            console.error('EmailJS Error:', err);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    renderExam();
+    startTimer();
+});
+</script>
+</body>
+</html>
